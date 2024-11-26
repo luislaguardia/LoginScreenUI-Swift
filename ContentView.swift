@@ -8,7 +8,7 @@ struct ContentView: View {
     @State private var showingLoginScreen = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -47,8 +47,12 @@ struct ContentView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
                     
-                    NavigationLink(destination: Text("You are logged in @\(username)"), isActive: $showingLoginScreen) {
+                    // NavigationLink updated to use the new approach
+                    NavigationLink(value: showingLoginScreen) {
                         EmptyView()
+                    }
+                    .navigationDestination(for: Bool.self) { _ in
+                        Text("You are logged in @\(username)")
                     }
                 }
             }
